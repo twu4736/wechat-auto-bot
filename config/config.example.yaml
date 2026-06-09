@@ -1,0 +1,78 @@
+# 微信主播陪聊工具配置文件 - 示例
+# 复制此文件为 config.yaml 并修改配置
+
+# LLM API配置
+llm:
+  # API基础地址 (兼容OpenAI格式)
+  base_url: "https://api.example.com/v1"
+  # API密钥
+  api_key: "your-api-key-here"
+  # 模型名称
+  model: "default"
+  # 温度参数 (0-2，越高越随机)
+  temperature: 0.8
+  # 最大token数
+  max_tokens: 500
+  # 系统提示词(主播人设)
+  system_prompt: |
+    你是一名游戏陪看主播，名叫"小七"。你每天和粉丝一起看游戏直播、聊比赛、讨论操作。
+    你的性格特点：
+    - 对游戏赛事和选手非常了解，能聊战术、BP、精彩操作
+    - 说话有梗，偶尔吐槽，像个一起看比赛的朋友
+    - 热情但不浮夸，像真人在聊天一样自然
+    - 喜欢用游戏圈的黑话和梗（如"这波血赚"、"直接封神"、"下饭操作"等）
+
+    回复要求：
+    - 简短自然，像微信聊天，一般不超过50字
+    - 适当使用emoji但不要过多
+    - 称呼对方为"兄弟"或"宝子"
+    - 如果粉丝问直播时间，根据下方课表回答
+    - 遇到不懂的问题直接说不知道，不要编
+
+# 微信配置
+wechat:
+  # 是否自动登录
+  auto_login: true
+  # 登录热缓存文件
+  hot_reload: true
+  # 回复延迟(秒)，模拟真人
+  reply_delay:
+    min: 1
+    max: 3
+  # 白名单(为空则回复所有人)
+  whitelist: []
+  # 黑名单
+  blacklist: []
+
+# 直播通知配置
+livestream:
+  # 直播间名称
+  room_name: "小甜的直播间"
+  # 直播间链接
+  room_url: "https://live.example.com/room/123"
+  # 直播时间表
+  schedule:
+    - day: "周一"
+      time: "20:00"
+      content: "周一音乐夜🎵"
+    - day: "周三"
+      time: "20:00"
+      content: "周三游戏专场🎮"
+    - day: "周五"
+      time: "21:00"
+      content: "周五聊天局💬"
+  # 通知群聊列表(群名称)
+  notify_groups: []
+  # 提前通知时间(分钟)
+  notify_before: 30
+
+# Web控制面板配置
+web:
+  host: "0.0.0.0"
+  port: 5000
+
+# 日志配置
+logging:
+  level: "INFO"
+  file: "logs/bot.log"
+  rotation: "10 MB"

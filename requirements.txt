@@ -1,0 +1,27 @@
+# 微信接入
+itchat-uos==1.5.0.dev0
+
+# HTTP请求
+requests>=2.31.0
+aiohttp>=3.9.0
+
+# 配置管理
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+
+# 定时任务
+schedule>=1.2.1
+apscheduler>=3.10.4
+
+# 日志
+loguru>=0.7.2
+
+# 数据库(可选，用于存储聊天记录)
+sqlalchemy>=2.0.23
+
+# Web控制面板
+flask>=3.0.0
+flask-socketio>=5.3.0
+
+# QR码生成(用于Web界面显示登录二维码)
+qrcode>=7.4

@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# 配置文件（包含敏感信息）
+config/config.yaml
+config/*.pkl
+
+# 日志
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code
+.claude/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+temp/
+QR.png
+
+# 环境变量
+.env
+.env.local

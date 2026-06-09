@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微信主播陪聊工具 - 控制面板</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <!-- 顶部标题栏 -->
+    <header class="header">
+      <h1>🎮 微信主播陪聊工具</h1>
+      <div class="header-status">
+        <span id="ws-status" class="dot dot-gray"></span>
+        <span id="ws-status-text">未连接</span>
+      </div>
+    </header>
+
+    <div class="main-grid">
+      <!-- 左侧面板 -->
+      <div class="left-panel">
+        <!-- 登录卡片 -->
+        <div class="card">
+          <div class="card-header">
+            <span>📱 微信登录</span>
+            <span id="login-badge" class="badge badge-gray">未登录</span>
+          </div>
+          <div class="card-body">
+            <div id="qr-section" style="display:none;">
+              <p class="tip">请使用微信扫描下方二维码</p>
+              <div class="qr-box">
+                <img id="qr-image" src="" alt="QR码">
+              </div>
+              <p id="qr-status" class="qr-status qr-status-waiting">正在生成二维码...</p>
+            </div>
+            <div id="login-info" style="display:none;">
+              <p>✅ 已登录: <strong id="login-nickname"></strong></p>
+            </div>
+            <div class="btn-group">
+              <button id="btn-login" class="btn btn-primary" onclick="doLogin()">登录微信</button>
+              <button id="btn-logout" class="btn btn-danger" style="display:none;" onclick="doLogout()">退出登录</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 自动回复卡片 -->
+        <div class="card">
+          <div class="card-header">
+            <span>🤖 自动回复</span>
+            <span id="reply-badge" class="badge badge-gray">已关闭</span>
+          </div>
+          <div class="card-body">
+            <div class="toggle-row">
+              <span>自动回复开关</span>
+              <label class="switch">
+                <input type="checkbox" id="auto-reply-switch" onchange="toggleAutoReply()">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="stats-row">
+              <div class="stat">
+                <div class="stat-value" id="msg-count">0</div>
+                <div class="stat-label">消息计数</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 直播状态卡片 -->
+        <div class="card">
+          <div class="card-header">
+            <span>📡 直播状态</span>
+            <span id="live-badge" class="badge badge-gray">未开播</span>
+          </div>
+          <div class="card-body">
+            <div class="toggle-row">
+              <span>开播 / 下播</span>
+              <label class="switch">
+                <input type="checkbox" id="live-switch" onchange="toggleLiveStatus()">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="input-row">
+              <label>当前活动</label>
+              <input type="text" id="live-activity" placeholder="例如：周一音乐夜" class="input">
+            </div>
+            <button class="btn btn-small" onclick="updateLiveActivity()">更新活动</button>
+            <div id="next-notify" class="tip" style="margin-top:10px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧面板 -->
+      <div class="right-panel">
+        <!-- 直播课表卡片 -->
+        <div class="card">
+          <div class="card-header">
+            <span>📅 直播课表</span>
+          </div>
+          <div class="card-body">
+            <div id="schedule-list" class="schedule-list">
+              <p class="tip">加载中...</p>
+            </div>
+            <div class="add-schedule">
+              <div class="input-row inline">
+                <select id="sched-day" class="input input-sm">
+                  <option value="周一">周一</option>
+                  <option value="周二">周二</option>
+                  <option value="周三">周三</option>
+                  <option value="周四">周四</option>
+                  <option value="周五">周五</option>
+                  <option value="周六">周六</option>
+                  <option value="周日">周日</option>
+                </select>
+                <input type="time" id="sched-time" value="20:00" class="input input-sm">
+                <input type="text" id="sched-content" placeholder="直播内容" class="input input-sm" style="flex:2;">
+                <button class="btn btn-primary btn-sm" onclick="addSchedule()">添加</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 手动通知卡片 -->
+        <div class="card">
+          <div class="card-header">
+            <span>📢 手动通知</span>
+          </div>
+          <div class="card-body">
+            <textarea id="notify-content" class="input" rows="3" placeholder="输入通知内容，点击发送到所有通知群"></textarea>
+            <button class="btn btn-primary" onclick="sendNotify()" style="margin-top:8px;">发送通知</button>
+          </div>
+        </div>
+
+        <!-- 实时日志卡片 -->
+        <div class="card card-grow">
+          <div class="card-header">
+            <span>📋 实时日志</span>
+            <button class="btn btn-small" onclick="clearLogs()">清空</button>
+          </div>
+          <div class="card-body">
+            <div id="log-area" class="log-area">
+              <p class="tip">等待消息...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
